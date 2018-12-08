@@ -1,0 +1,28 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <img width="300" alt="Angular Logo" [src]="image">
+</div>
+
+<ul>
+  <li *ngFor="let name of names">{{ name }}</li>
+</ul>
+
+<span *ngIf="gender == 'male';then showsomeThing else showsomeThingElse"></span>
+<ng-template #showsomeThing>
+  <h2>Mr.</h2>
+</ng-template>
+<ng-template #showsomeThingElse>
+  <h2>Mrs.</h2>
+</ng-template>
+<h1>Ahmed Samir</h1>
+<button
+  (click)="changeData()"
+  [style.color]="show ? 'red' : 'blue'"
+  class="btn btn-primary" [disabled]="show">SignIn</button>
+
+<input
+  (keyup.enter)="changeData()"
+  type="text" class="form-control" placeholder="Enter your name">

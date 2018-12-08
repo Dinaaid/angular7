@@ -1,21 +1,66 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<header class="bg-primary text-white p-4 mb-3">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+              <h1 id="header-titleX">X-Team <small>members &#12484;</small></h1>
+          </div>
+          <div class="col-md-6 align-self-center">
+              <input type="text" class="form-control" id="filterX" placeholder="Search member...">
+          </div>
+      </div>
+  </div>
+</header>
+
+<div class="container">
+  <div id="mainX" class="card card-body">
+      <h2 class="titleX">Add New Member yasta</h2>
+          <input 
+            #newMember
+            [(ngModel)]="newMemberX"
+            (keyup.enter)="addMember(newMember.value)"
+            type="text" class="col-sm-7 form-control mb-2" id="newMemberX" autofocus>
+          <input type="submit" class="col-sm-4 btn btn-dark" value="Add Yasta">
+      <h2 class="titleX">Members</h2>
+      <ul class="list-group">
+          <li
+            *ngFor="let member of members; let i = index"
+            class="list-group-item">
+            <span *ngIf="(editId == i) && editMemberX; then showEdit else showMember"></span>
+              <ng-template  #showMember>
+                <span>{{ member }}</span>
+              </ng-template>
+              <ng-template #showEdit>
+                <input 
+                  #updatedMemberX
+                  (keyup.enter)="editMemberX = false">
+              </ng-template>
+              <button 
+                (click)="removeMember(i)"
+                class="btn btn-danger btn-sm float-right deleteX">X</button>
+              <button 
+                (click)="editMember(i)"
+                class="btn btn-danger btn-sm float-right mr-2">Edit</button>
+          </li>
+
+          <li *ngFor="let member of members$ | async; let i = index" class="list-group-item form-inline">
+            <span *ngIf="(editId == i) && editMemberX; then showEdit else showMsg"></span>
+            <ng-template #showMsg>{{ member.text }}</ng-template>
+            <ng-template #showEdit>
+              <input
+                #updateText
+                (keyup.enter)="updateMember(member.key, updateText.value)"
+                (keyup.esc)="editMemberX = false"
+                type="text" class="form-control d-inline col-7" value="{{ member.text }}"> 
+            </ng-template>
+            <button class="deleteX btn btn-danger btn-sm float-right" 
+              (click)="deleteMember(member.key)">X</button>
+            <button class="editX btn btn-danger btn-sm float-right mr-2"
+              (click)="editMember(i)">Edit</button>
+          </li>
+
+      </ul>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+
 
 <router-outlet></router-outlet>
