@@ -23,22 +23,23 @@
       <h2 class="titleX">Members</h2>
       <ul class="list-group">
           <li
-            *ngFor="let member of members; let i = index"
+            *ngFor="let member of members$ | async; let i = index"
             class="list-group-item">
             <span *ngIf="(editId == i) && editMemberX; then showEdit else showMember"></span>
-              <ng-template  #showMember>
-                <span>{{ member }}</span>
+              <ng-template #showMember>
+                <span>{{ member.name }}</span>
               </ng-template>
               <ng-template #showEdit>
                 <input 
                   #updatedMemberX
-                  (keyup.enter)="editMemberX = false">
+                  [(ngModel)]="updatedMember"
+                  (keyup.enter)="updateMember(i)">
               </ng-template>
               <button 
-                (click)="removeMember(i)"
+                (click)="removeMember(member.key)"
                 class="btn btn-danger btn-sm float-right deleteX">X</button>
               <button 
-                (click)="editMember(i)"
+                (click)="editMember(member.key, updatedMemberX.value)"
                 class="btn btn-danger btn-sm float-right mr-2">Edit</button>
           </li>
 
